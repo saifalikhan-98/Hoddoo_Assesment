@@ -43,7 +43,8 @@ class PostAdapter(val context: Context):RecyclerView.Adapter<PostAdapter.ViewHol
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val listofdata=difflist.currentList[position]
+
+            val listofdata=difflist.currentList[position]
 
 
             val name= listofdata.owner.firstName +""+listofdata.owner.lastName
@@ -74,14 +75,15 @@ class PostAdapter(val context: Context):RecyclerView.Adapter<PostAdapter.ViewHol
 
                 likes.text=totallikes
                 dateuploaded.text=pubdate
-                //tagRecyclerview.layoutManager=LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
+
                 tagRecyclerview.adapter=tagsAdapeter
                 getPostComments.setOnClickListener {
-                    val intent= Intent(context,CommentsActivity::class.java)
-                    intent.putExtra(POSTKEY,postid)
-                    context.startActivity(intent)
+                  goToCommentsSection(postid)
                 }
 
+                postCard.setOnClickListener {
+                    goToCommentsSection(postid)
+                }
         }
 
 
@@ -92,6 +94,10 @@ class PostAdapter(val context: Context):RecyclerView.Adapter<PostAdapter.ViewHol
         return difflist.currentList.size
     }
 
-
+    fun goToCommentsSection(postid:String){
+        val intent= Intent(context,CommentsActivity::class.java)
+        intent.putExtra(POSTKEY,postid)
+        context.startActivity(intent)
+    }
 
 }
